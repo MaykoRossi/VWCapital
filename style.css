@@ -1,0 +1,349 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo Geral */
+body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+/* Barra de Navegação */
+.barranavegacao {
+    background-color: #000000;
+}
+
+.mainnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    flex-wrap: wrap; /* Permite que os itens se movam para a próxima linha se necessário */
+}
+
+.mainnav .logo img {
+    height: 60px;
+}
+
+.mainnav .menutexto {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.mainnav .menutexto li {
+    display: inline-block;
+}
+
+.mainnav .menutexto li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.mainnav .menutexto li a:hover {
+    color: rgb(0, 0, 0);
+    background-color: white;
+    padding: .2rem;
+    border-radius: .3rem;
+}
+
+/* Slider */
+.slider {
+    display: flex;
+    width: 300%;
+    animation: slide 12s infinite;
+}
+
+.slider .slide {
+    width: 100%;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0%);
+    }
+    33% {
+        transform: translateX(-100%);
+    }
+    66% {
+        transform: translateX(-200%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+/* Cartão de Notícia */
+.cardum {
+    padding: 20px;
+    text-align: center;
+}
+
+.newimg img {
+    border-radius: 50%;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .mainnav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .mainnav .menutexto {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .mainnav .menutexto li {
+        display: block;
+    }
+
+    .mainnav .menutexto li a {
+        font-size: 14px;
+        padding: 0.5rem; /* Adiciona um pouco de espaço ao redor dos links */
+    }
+
+    .slider {
+        width: 100%;
+    }
+
+    .cardum {
+        padding: 15px;
+    }
+
+    .newimg img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mainnav .menutexto li a {
+        font-size: 12px;
+    }
+
+    .newimg img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .cardum {
+        padding: 10px;
+    }
+}
+
+/* Estilo do Botão Flutuante */
+#scrollTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    display: none; /* Oculta o botão por padrão */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Efeito de Hover no Botão */
+#scrollTopBtn:hover {
+    background-color: #0056b3;
+}
+
+/* Mostrar o botão quando o usuário rola para baixo */
+#scrollTopBtn.show {
+    display: flex; /* Torna o botão visível */
+    opacity: 1; /* Garante que o botão esteja totalmente visível */
+    transform: translateY(0); /* Garante que o botão esteja na posição correta */
+}
+
+
+
+/* BANNER ROTATIVO */
+.container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    max-height: 70vh; /* Limita a altura máxima do contêiner */
+    display: flex;
+    align-items: center; /* Centraliza verticalmente o conteúdo no contêiner */
+}
+
+/* Slider que contém os slides */
+.slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%; /* Garante que o slider ocupe a largura total do contêiner */
+}
+
+/* Slide individual */
+.slide {
+    flex: 0 0 100%; /* Garante que cada slide ocupe 100% da largura do contêiner */
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente a imagem */
+    align-items: center; /* Centraliza verticalmente a imagem */
+}
+
+/* Imagem dentro do slide */
+.slide img {
+    max-width: 100%; /* Limita a largura máxima da imagem para a largura do contêiner */
+    max-height: 100%; /* Limita a altura máxima da imagem para a altura do contêiner */
+    object-fit: contain; /* Garante que a imagem inteira seja visível sem cortes */
+    object-position: center; /* Centraliza a imagem dentro do slide */
+    display: block; /* Remove o espaço em branco abaixo da imagem */
+}
+
+/* Botões de controle */
+button.prev, button.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+button.prev {
+    left: 10px;
+}
+
+button.next {
+    right: 10px;
+}
+
+button.prev:hover, button.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .container {
+        max-height: 40vh; /* Reduz a altura máxima do contêiner em dispositivos móveis */
+    }
+    
+    button.prev, button.next {
+        padding: 8px; /* Reduz o tamanho dos botões para dispositivos móveis */
+    }
+}
+
+
+/* NOTICIAS */
+
+.news-section {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Título da seção */
+.news-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Cartão de notícia */
+.cardum {
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Imagem dentro do cartão */
+.cardum .newimg img {
+    border-radius: 50%;
+    margin-bottom: 10px;
+    width: 80px; /* Define a largura da imagem */
+    height: 80px; /* Define a altura da imagem */
+    object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+}
+
+/* Título do cartão */
+.cardum h3 {
+    margin-bottom: 10px;
+}
+
+/* Texto introdutório */
+.cardum .intro-text {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Texto completo */
+.cardum .full-text {
+    margin: 15px 0;
+    display: none; /* Esconde o texto completo por padrão */
+}
+
+/* Botão */
+.cardum button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.cardum button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .news-section {
+        padding: 10px; /* Reduz o espaçamento interno em dispositivos móveis */
+    }
+    
+    .cardum {
+        padding: 15px; /* Reduz o espaçamento interno dos cartões */
+        margin-bottom: 15px; /* Ajusta o espaçamento entre os cartões */
+    }
+    
+    .cardum .newimg img {
+        width: 60px; /* Ajusta a largura da imagem em dispositivos móveis */
+        height: 60px; /* Ajusta a altura da imagem em dispositivos móveis */
+    }
+    
+    .cardum button {
+        padding: 8px 16px; /* Ajusta o tamanho do botão para dispositivos móveis */
+    }
+}
+
+
+
+/* Estilização do rodapé */
+footer {
+    background-color: #333; /* Cor de fundo do rodapé */
+    color: white; /* Cor do texto */
+    text-align: center; /* Alinha o texto ao centro */
+    padding: 10px 0; /* Espaçamento interno superior e inferior */
+}
+
+.foot {
+    max-width: 1200px; /* Largura máxima do rodapé */
+    margin: 0 auto; /* Centraliza o rodapé horizontalmente */
+    font-size: 14px; /* Tamanho da fonte */
+}
