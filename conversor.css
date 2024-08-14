@@ -1,0 +1,64 @@
+/* Estilo para a seção do conversor de moedas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo Geral */
+body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+.converter-section {
+    display: flex;
+    justify-content: center; /* Centraliza a div horizontalmente */
+    align-items: center; /* Centraliza a div verticalmente */
+    height: 100vh; /* Ocupa toda a altura da viewport */
+    padding: 20px;
+    background-color: #000000; /* Cor de fundo para a seção */
+}
+
+.container2 {
+    background-color: white; /* Fundo branco para o container */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    max-width: 600px; /* Largura máxima do container */
+    width: 100%; /* Ocupa toda a largura disponível */
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre os elementos */
+}
+
+input[type="number"], select {
+    width: 100%; /* Ocupa toda a largura disponível dentro do container */
+    padding: 10px;
+    border: 1px solid #ddd; /* Borda sutil */
+    border-radius: 4px; /* Bordas arredondadas para campos de entrada */
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#result {
+    margin-top: 20px;
+}

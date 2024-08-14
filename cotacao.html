@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VW - Serviços Financeiros</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="conversor.css">
 </head>
 <body>
 <header>
@@ -27,40 +28,44 @@
 
 <hr>
 
-<!-- Conversor de Moedas -->
-<div class="container2">
-    <h2>Conversor de Moedas</h2>
-    <div class="input-container">
-        <div>
-            <label for="fromCurrency">De:</label>
-            <select id="fromCurrency" onchange="updateExchangeRate()">
-                <option value="USD">USD - Dólar Americano</option>
-                <option value="BRL">BRL - Real Brasileiro</option>
-                <option value="ARS">ARS - Peso Argentino</option>
-            </select>
+<section class="converter-section">
+    <div class="container2">
+        <h2>Conversor de Moedas</h2>
+        <div class="input-container">
+            <div>
+                <label for="fromCurrency">De:</label>
+                <select id="fromCurrency" onchange="updateExchangeRate()">
+                    <option value="USD">USD - Dólar Americano</option>
+                    <option value="BRL">BRL - Real Brasileiro</option>
+                    <option value="ARS">ARS - Peso Argentino</option>
+                </select>
+            </div>
+            <div>
+                <label for="toCurrency">Para:</label>
+                <select id="toCurrency" onchange="updateExchangeRate()">
+                    <option value="USD">USD - Dólar Americano</option>
+                    <option value="BRL">BRL - Real Brasileiro</option>
+                    <option value="ARS">ARS - Peso Argentino</option>
+                </select>
+            </div>
+            <div id="exchangeRate" class="exchange-rate"></div>
         </div>
         <div>
-            <label for="toCurrency">Para:</label>
-            <select id="toCurrency" onchange="updateExchangeRate()">
-                <option value="USD">USD - Dólar Americano</option>
-                <option value="BRL">BRL - Real Brasileiro</option>
-                <option value="ARS">ARS - Peso Argentino</option>
-            </select>
+            <label for="amount">Valor:</label>
+            <input type="number" id="amount" placeholder="Valor a converter">
         </div>
-        <div id="exchangeRate" class="exchange-rate"></div>
+        <button onclick="convertCurrency()">Converter</button>
+        <div id="result"></div>
     </div>
-    <div>
-        <label for="amount">Valor:</label>
-        <input type="number" id="amount" placeholder="Valor a converter">
-    </div>
-    <button onclick="convertCurrency()">Converter</button>
-    <div id="result"></div>
-</div>
+</section>
+
 
 </main>
 
 <footer>
-    <div class="foot"></div>
+    <div class="foot">
+        <p>&copy; 2024 VW Capital. Todos os direitos reservados. Imagens e conteúdos protegidos por direitos autorais.</p>
+    </div>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

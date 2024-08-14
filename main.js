@@ -1,21 +1,46 @@
-const apiKey = 'wss://testnet.binance.vision/ws-api/v3';  // Substitua pela sua chave de API
+const baseUrl = 'https://api.binance.com/api/v3/';
 const exchangeRates = {};
 
 // Função para buscar as cotações de câmbio
 function fetchExchangeRates() {
-    const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;
+    const url = `${baseUrl}ticker/price`;
 
     $.get(url, function(data) {
-        exchangeRates.USD = data.conversion_rates;
-        exchangeRates.BRL = {
-            USD: 1 / exchangeRates.USD.BRL,
-            ARS: exchangeRates.USD.ARS / exchangeRates.USD.BRL
-        };
-        exchangeRates.ARS = {
-            USD: 1 / exchangeRates.USD.ARS,
-            BRL: exchangeRates.USD.BRL / exchangeRates.USD.ARS
-        };
-        updateExchangeRate(); // Atualizar a taxa de câmbio exibida ao carregar os dados
+        // Inicialize as taxas de conversão
+        const rates = {};
+        data.forEach(pair => {
+            const symbol = pair.symbol;
+            const price = parseFloat(pair.price);
+            if (symbol === 'USDTBRL') {
+                rates.BRL = { USDT: price };
+            } else if (symbol === 'USDTARS') {
+                rates.ARS = { USDT: price };
+            } else if (symbol === 'USDTUSD') {
+                rates.USD = { USDT: price };
+            }
+        });
+
+        // Calcular as taxas de câmbio entre BRL, ARS e USD
+        if (rates.BRL && rates.ARS && rates.USD) {
+            exchangeRates.BRL = {
+                USD: 1 / rates.BRL.USDT * rates.USD.USDT,
+                ARS: rates.ARS.USDT / rates.BRL.USDT
+            };
+
+            exchangeRates.ARS = {
+                USD: 1 / rates.ARS.USDT * rates.USD.USDT,
+                BRL: 1 / rates.ARS.USDT * rates.BRL.USDT
+            };
+
+            exchangeRates.USD = {
+                BRL: rates.BRL.USDT / rates.USD.USDT,
+                ARS: rates.ARS.USDT / rates.USD.USDT
+            };
+
+            updateExchangeRate(); // Atualizar a taxa de câmbio exibida ao carregar os dados
+        } else {
+            alert('Taxas de câmbio não disponíveis. Por favor, tente novamente mais tarde.');
+        }
     }).fail(function() {
         alert('Erro ao buscar a cotação. Por favor, tente novamente mais tarde.');
     });
@@ -32,7 +57,7 @@ function updateExchangeRate() {
         return;
     }
 
-    const rate = exchangeRates[fromCurrency][toCurrency];
+    const rate = exchangeRates[fromCurrency] && exchangeRates[fromCurrency][toCurrency];
     document.getElementById('exchangeRate').innerText = `TAXA: ${rate ? rate.toFixed(4) : 'N/A'}`;
 }
 
@@ -51,7 +76,7 @@ function convertCurrency() {
         return;
     }
 
-    const rate = exchangeRates[fromCurrency][toCurrency];
+    const rate = exchangeRates[fromCurrency] && exchangeRates[fromCurrency][toCurrency];
 
     if (rate) {
         const result = rate * amount;
