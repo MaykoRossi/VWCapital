@@ -1,49 +1,26 @@
-const baseUrl = 'https://api.binance.com/api/v3/';
+const apiKey = ''; // A API de conversão de moedas utilizada aqui não requer uma chave
+const baseUrl = 'https://api.exchangerate-api.com/v4/latest/USD'; // Endpoint para obter taxas de câmbio
 const exchangeRates = {};
 
 // Função para buscar as cotações de câmbio
 function fetchExchangeRates() {
-    const url = `${baseUrl}ticker/price`;
-
-    $.get(url, function(data) {
-        // Inicialize as taxas de conversão
-        const rates = {};
-        data.forEach(pair => {
-            const symbol = pair.symbol;
-            const price = parseFloat(pair.price);
-            if (symbol === 'USDTBRL') {
-                rates.BRL = { USDT: price };
-            } else if (symbol === 'USDTARS') {
-                rates.ARS = { USDT: price };
-            } else if (symbol === 'USDTUSD') {
-                rates.USD = { USDT: price };
-            }
-        });
-
-        // Calcular as taxas de câmbio entre BRL, ARS e USD
-        if (rates.BRL && rates.ARS && rates.USD) {
+    fetch(baseUrl)
+        .then(response => response.json())
+        .then(data => {
+            exchangeRates.USD = data.rates;
             exchangeRates.BRL = {
-                USD: 1 / rates.BRL.USDT * rates.USD.USDT,
-                ARS: rates.ARS.USDT / rates.BRL.USDT
+                USD: 1 / exchangeRates.USD.BRL,
+                ARS: exchangeRates.USD.ARS / exchangeRates.USD.BRL
             };
-
             exchangeRates.ARS = {
-                USD: 1 / rates.ARS.USDT * rates.USD.USDT,
-                BRL: 1 / rates.ARS.USDT * rates.BRL.USDT
+                USD: 1 / exchangeRates.USD.ARS,
+                BRL: exchangeRates.USD.BRL / exchangeRates.USD.ARS
             };
-
-            exchangeRates.USD = {
-                BRL: rates.BRL.USDT / rates.USD.USDT,
-                ARS: rates.ARS.USDT / rates.USD.USDT
-            };
-
             updateExchangeRate(); // Atualizar a taxa de câmbio exibida ao carregar os dados
-        } else {
-            alert('Taxas de câmbio não disponíveis. Por favor, tente novamente mais tarde.');
-        }
-    }).fail(function() {
-        alert('Erro ao buscar a cotação. Por favor, tente novamente mais tarde.');
-    });
+        })
+        .catch(() => {
+            alert('Erro ao buscar a cotação. Por favor, tente novamente mais tarde.');
+        });
 }
 
 fetchExchangeRates();
